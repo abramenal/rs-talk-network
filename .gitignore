@@ -25,3 +25,6 @@ dist/
 
 .env*
 !.env.sample
+
+ssl/*.crt
+ssl/*.key

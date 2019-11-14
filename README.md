@@ -28,3 +28,23 @@
 res.setHeader('Access-Control-Allow-Origin', '*');
 res.setHeader('Access-Control-Allow-Headers', 'Origin Content-Type, Accept');
 ```
+
+## HTTPS
+
+In order to create a HTTPS server with self-signed certificate you need to:
+
+1. Generate key and certificate pair locally (note that output path for both of them is set here):
+
+```bash
+  sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./selfsigned.key -out selfsigned.crt
+```
+
+2. Set up a HTTPS server:
+
+See [server-https.js](./src/server-https.js)
+
+3. Ensure you chose to allow self-signed certificated on localhost in Chrome:
+
+```
+chrome://flags/#allow-insecure-localhost
+```
