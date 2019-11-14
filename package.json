@@ -21,5 +21,8 @@
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.19.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "browserslist": [
+    "last 1 Chrome version"
+  ]
 }

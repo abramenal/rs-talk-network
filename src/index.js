@@ -1,9 +1,14 @@
-// const CLIENT_ID = process.env.CLIENT_ID;
-// const CLIENT_SECRET = process.env.CLIENT_SECRET;
+/* eslint-disable prefer-destructuring */
+/* note: known Parcel.js limitation */
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+/* eslint-disable prefer-destructuring */
+
+const AUTH_QUERY = `client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}}`;
 
 /* async */ function searchUsersByQuery(query) {
   const baseUrl = 'https://api.github.com/search/users';
-  const queryString = `?q=${query}`;
+  const queryString = `?q=${query}&${AUTH_QUERY}`;
 
   const url = baseUrl + queryString;
 
@@ -15,13 +20,17 @@
     })
     .catch(e => console.error(e));
 
-  // try {
-  //   const response = await fetch(url);
-  //   const data = await response.json();
-  //   console.log(data);
-  // } catch (e) {
-  //   console.error(e);
-  // }
+  /*
+  let data;
+  try {
+    const response = await fetch(url);
+    data = await response.json();
+  } catch (e) {
+    console.error(e);
+  }
+  const { items } = data;
+  return items.map(profile => profile.login);
+  */
 }
 
 function renderLoginList(loginList) {
