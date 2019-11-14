@@ -45,6 +45,6 @@ function renderLoginList(loginList) {
   document.body.append(ul);
 }
 
-searchUsersByQuery('abra').then(loginList => {
+searchUsersByQuery('abramen').then(loginList => {
   renderLoginList(loginList);
 });

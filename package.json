@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "parcel build index.html",
-    "dev": "npm start",
-    "lint": "eslint src/ --ext js",
+    "dev:client": "npm start",
+    "dev:server": "node src/server.js",
     "start": "parcel index.html",
+    "lint": "eslint src/ --ext js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "abramenal <pavel.auramenka@gmail.com>",
@@ -21,7 +22,9 @@
     "parcel-bundler": "^1.12.4",
     "prettier": "^1.19.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "browserslist": [
     "last 1 Chrome version"
   ]
