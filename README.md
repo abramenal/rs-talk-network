@@ -1,5 +1,9 @@
 # rs-talk-network
 
+## Prerequisites
+
+Install Node.js (LTS) directly from https://nodejs.org/en/ or via your favorite tool (nvm, homebrew, etc.)
+
 ## Quick start
 
 1. Install dependencies
@@ -26,7 +30,7 @@
 
 ```javascript
 res.setHeader('Access-Control-Allow-Origin', '*');
-res.setHeader('Access-Control-Allow-Headers', 'Origin Content-Type, Accept');
+res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
 ```
 
 ## HTTPS
@@ -39,12 +43,20 @@ In order to create a HTTPS server with self-signed certificate you need to:
   sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./selfsigned.key -out selfsigned.crt
 ```
 
-2. Set up a HTTPS server:
+2. Put `key` and `crt` files into [./ssl](./ssl) folder
+
+3. Set up a HTTPS server:
 
 See [server-https.js](./src/server-https.js)
 
-3. Ensure you chose to allow self-signed certificated on localhost in Chrome:
+```bash
+node src/server-https.js
+```
+
+4. Ensure you chose to allow self-signed certificated on localhost in Chrome:
 
 ```
 chrome://flags/#allow-insecure-localhost
 ```
+
+5. Go to [https://localhost:8001](https://localhost:8001)
