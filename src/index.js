@@ -1,50 +1,54 @@
-/* eslint-disable prefer-destructuring */
-/* note: known Parcel.js limitation */
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-/* eslint-disable prefer-destructuring */
+import 'weather-icons/css/weather-icons.min.css';
+import './style.css';
 
-const AUTH_QUERY = `client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}}`;
+async function getUserLocation() {
+  const LOCATION_API_TOKEN = 'eb5b90bb77d46a';
 
-/* async */ function searchUsersByQuery(query) {
-  const baseUrl = 'https://api.github.com/search/users';
-  const queryString = `?q=${query}&${AUTH_QUERY}`;
-
-  const url = baseUrl + queryString;
-
-  return fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      const { items } = data;
-      return items.map(profile => profile.login);
-    })
-    .catch(e => console.error(e));
-
-  /*
-  let data;
-  try {
-    const response = await fetch(url);
-    data = await response.json();
-  } catch (e) {
-    console.error(e);
-  }
-  const { items } = data;
-  return items.map(profile => profile.login);
-  */
-}
-
-function renderLoginList(loginList) {
-  const ul = document.createElement('ul');
-
-  loginList.forEach(login => {
-    const li = document.createElement('li');
-    li.innerText = login;
-    ul.appendChild(li);
+  return fetch(`https://ipinfo.io/json?token=${LOCATION_API_TOKEN}`).then(response => {
+    return response.json();
   });
-
-  document.body.append(ul);
 }
 
-searchUsersByQuery('abramen').then(loginList => {
-  renderLoginList(loginList);
-});
+async function getWeatherForecast(locationCoordinates) {
+  return fetch(`http://localhost:8000/weather-forecast/${locationCoordinates}`).then(response => response.json());
+}
+
+function renderForecastInfo(currently, city) {
+  const { summary, icon } = currently;
+
+  const infoContainer = document.createDocumentFragment();
+
+  /* Icon */
+  const weatherIconClassName = {
+    'partly-cloudy-night': 'icon wi wi-night-partly-cloudy',
+  };
+
+  const iconEl = document.createElement('i');
+  iconEl.className = weatherIconClassName[icon];
+  infoContainer.appendChild(iconEl);
+
+  /* Summary */
+  const summaryEl = document.createElement('p');
+  summaryEl.innerText = summary;
+  infoContainer.appendChild(summaryEl);
+
+  /* City */
+  const cityEl = document.createElement('p');
+  cityEl.innerText = city;
+  infoContainer.appendChild(cityEl);
+
+  document.getElementById('forecast').appendChild(infoContainer);
+}
+
+async function init() {
+  try {
+    const { loc, city } = await getUserLocation();
+    const { currently } = await getWeatherForecast(loc);
+
+    renderForecastInfo(currently, city);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+init();

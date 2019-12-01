@@ -1,0 +1,11 @@
+#forecast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.icon {
+  font-size: 48px;
+  color: #924da3;
+}
